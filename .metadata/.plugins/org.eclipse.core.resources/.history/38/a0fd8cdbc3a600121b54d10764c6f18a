@@ -2,36 +2,59 @@ package sve2.fhbay.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//@Transient = not mapped to db
-	@Id @GeneratedValue
+	// @Transient = not mapped to db
+	@Id
+	@GeneratedValue
 	private Long id;
-	@Column(length=20, nullable=true)
+	@Column(length = 20)
 	private String firstname;
 	private String lastname;
 	private String username;
 	private String password;
+	@Column(nullable = false)
 	private String email;
-	
-	// wenn keine referenz mehr wird gelöscht (orphanRemoval)
-	@OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
-	private Address billingAddress;
-	
-	private List<Address> shippingAddresses = new ArrayList<Address>();
 
+	// wenn keine referenz mehr wird gelöscht (orphanRemoval)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Address billingAddress;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn
+	@OrderColumn(name="INDEX")
+	private List<Address> shippingAddresses = new ArrayList<Address>();
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@MapKeyColumn(name = "PHONE_TYPE")
+	private Map<String, Phone> phones = new HashMap<String, Phone>();
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@MapKeyColumn(name = "PAYMENT_DATA")
+	private List<PaymentData> paymentData = new ArrayList<PaymentData>();
+
+	/*
+	 * Constructors
+	 */
 	public Customer() {
 	}
 
@@ -45,6 +68,9 @@ public class Customer implements Serializable {
 		this.email = email;
 	}
 
+	/*
+	 * Getters & Setters
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -112,9 +138,51 @@ public class Customer implements Serializable {
 	public void setShippingAddresses(List<Address> shippingAddresses) {
 		this.shippingAddresses = shippingAddresses;
 	}
+
+	// variante 1
+//	public Set<Phone> getPhones() {
+//		return phones;
+//	}
+//
+//	public void setPhones(Set<Phone> phones) {
+//		this.phones = phones;
+//	}
 	
+	public List<PaymentData> getPaymentData() {
+		return paymentData;
+	}
+
+	public void setPaymentData(List<PaymentData> paymentData) {
+		this.paymentData = paymentData;
+	}
+
+	/*
+	 * comfort method
+	 */
 	public void addShippingAddress(Address address) {
 		shippingAddresses.add(address);
+	}
+	
+	public void addPaymentData(PaymentData paymentData) {
+		this.paymentData.add(paymentData);
+	}
+	
+	// phone variant 1
+//	public void addPhone(Phone phone) {
+//		phones.add(phone);
+//	}
+	
+	public Map<String, Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Map<String, Phone> phones) {
+		this.phones = phones;
+	}
+	
+	// variante 2
+	public void addPhone(String type, Phone phone) {
+		phones.put(type, phone);
 	}
 
 	public String toString() {
@@ -124,7 +192,7 @@ public class Customer implements Serializable {
 		sb.append(" firstname: " + firstname);
 		sb.append(" username: " + username);
 		sb.append(" email: " + email);
-		if(billingAddress != null)
+		if (billingAddress != null)
 			sb.append(" Billing Address: " + billingAddress);
 		return sb.toString();
 	}

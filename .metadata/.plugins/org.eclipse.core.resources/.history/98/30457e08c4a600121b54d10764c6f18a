@@ -30,6 +30,30 @@ public class FhBayConsoleClient {
 		testCustomerAdmin();
 	}
 
+	// private static void testSimpleCustomerAdmin() throws NamingException {
+	// /*
+	// * JBoss output (jndi name)
+	// * java:jboss/exported/fhbay-beans/SimpleCustomerAdminBean
+	// * !sve2.fhbay.interfaces.SimpleCustomerAdminRemote
+	// */
+	// // Context ctx = new InitialContext();
+	// // Object ref =
+	// //
+	// ctx.lookup("fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote");
+	// // SimpleCustomerAdminRemote custAdminProxy =
+	// // (SimpleCustomerAdminRemote) ref;
+	//
+	// SimpleCustomerAdminRemote custAdminProxy = JndiUtil
+	// .getRemoteObject(
+	// "fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote",
+	// SimpleCustomerAdminRemote.class);
+	//
+	// Customer cust1 = new Customer("Franz", "Klammer", "fklammer", "passwd",
+	// "fklammer@gmail.com");
+	// System.out.println("Client: save customer");
+	// custAdminProxy.saveCustomer(cust1);
+	// }
+
 	private static void testCustomerAdmin() {
 		try {
 			System.out.println("--------------- save customer ---------------");

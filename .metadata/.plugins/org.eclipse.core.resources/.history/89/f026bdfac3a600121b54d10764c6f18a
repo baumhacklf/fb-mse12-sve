@@ -22,13 +22,39 @@ public class FhBayConsoleClient {
 	public static void main(String[] args) throws NamingException {
 		LoggingUtil.initJdkLogging("logging.properties");
 
+		// java:jboss/exported/fhbay-beans/CustomerAdminBean!sve2.fhbay.interfaces.CustomerAdminRemote
 		custAdmin = JndiUtil
 				.getRemoteObject(
 						"fhbay-beans/CustomerAdminBean!sve2.fhbay.interfaces.CustomerAdminRemote",
 						CustomerAdminRemote.class);
 
 		testCustomerAdmin();
+		// testSimpleCustomerAdmin();
 	}
+
+	// private static void testSimpleCustomerAdmin() throws NamingException {
+	// /*
+	// * JBoss output (jndi name)
+	// * java:jboss/exported/fhbay-beans/SimpleCustomerAdminBean
+	// * !sve2.fhbay.interfaces.SimpleCustomerAdminRemote
+	// */
+	// // Context ctx = new InitialContext();
+	// // Object ref =
+	// //
+	// ctx.lookup("fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote");
+	// // SimpleCustomerAdminRemote custAdminProxy =
+	// // (SimpleCustomerAdminRemote) ref;
+	//
+	// SimpleCustomerAdminRemote custAdminProxy = JndiUtil
+	// .getRemoteObject(
+	// "fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote",
+	// SimpleCustomerAdminRemote.class);
+	//
+	// Customer cust1 = new Customer("Franz", "Klammer", "fklammer", "passwd",
+	// "fklammer@gmail.com");
+	// System.out.println("Client: save customer");
+	// custAdminProxy.saveCustomer(cust1);
+	// }
 
 	private static void testCustomerAdmin() {
 		try {
@@ -38,6 +64,7 @@ public class FhBayConsoleClient {
 			cust1.setBillingAddress(new Address("4232", "Hagenberg",
 					"Hauptstraße 117"));
 			cust1.addPhone("mobile", new Phone("+43", "(0) 555 333"));
+			// cust1.addPhone(new Phone("mobile", "+43", "(0) 555 333"));
 			cust1.addShippingAddress(new Address("5555", "Mostbusch",
 					"Linzerstraße 15"));
 			cust1.addShippingAddress(new Address("8050", "Königsbrunn",
@@ -73,6 +100,8 @@ public class FhBayConsoleClient {
 
 				if (!c.getPhones().isEmpty()) {
 					System.out.println("  phone numbers:");
+					// for (Phone phone : c.getPhones())
+					// System.out.println("     " + phone);
 					for (Entry<String, Phone> entry : c.getPhones().entrySet())
 						System.out.println("     " + entry.getKey() + ": "
 								+ entry.getValue());

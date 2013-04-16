@@ -44,12 +44,6 @@ public class Customer implements Serializable {
 	@OrderColumn(name="INDEX")
 	private List<Address> shippingAddresses = new ArrayList<Address>();
 	
-	// variante 1
-//	@ElementCollection(fetch=FetchType.EAGER)
-//	@CollectionTable(name="PHONE")
-//	private Set<Phone> phones = new HashSet<Phone>();
-	
-	// variante 2
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@MapKeyColumn(name = "PHONE_TYPE")
 	private Map<String, Phone> phones = new HashMap<String, Phone>();
@@ -144,15 +138,6 @@ public class Customer implements Serializable {
 	public void setShippingAddresses(List<Address> shippingAddresses) {
 		this.shippingAddresses = shippingAddresses;
 	}
-
-	// variante 1
-//	public Set<Phone> getPhones() {
-//		return phones;
-//	}
-//
-//	public void setPhones(Set<Phone> phones) {
-//		this.phones = phones;
-//	}
 	
 	public List<PaymentData> getPaymentData() {
 		return paymentData;
@@ -173,11 +158,6 @@ public class Customer implements Serializable {
 		this.paymentData.add(paymentData);
 	}
 	
-	// phone variant 1
-//	public void addPhone(Phone phone) {
-//		phones.add(phone);
-//	}
-	
 	public Map<String, Phone> getPhones() {
 		return phones;
 	}
@@ -186,7 +166,6 @@ public class Customer implements Serializable {
 		this.phones = phones;
 	}
 	
-	// variante 2
 	public void addPhone(String type, Phone phone) {
 		phones.put(type, phone);
 	}
