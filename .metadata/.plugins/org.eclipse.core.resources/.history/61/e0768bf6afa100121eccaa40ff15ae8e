@@ -1,0 +1,42 @@
+package sve2.fhbay.beans.dao;
+
+import java.io.Serializable;
+import java.util.Collection;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import sve2.fhbay.domain.Customer;
+import sve2.fhbay.interfaces.dao.CustomerDao;
+import sve2.fhbay.interfaces.dao.Dao;
+
+public class AbstractDaoBean<T, ID extends Serializable> implements Dao<T, ID>{
+
+	@PersistenceContext
+	private EntityManager em;
+
+	public AbstractDaoBean() {
+		super();
+	}
+
+	@Override
+	public void persist(T entity) {
+		em.persist(entity);
+	}
+
+	@Override
+	public T findById(ID id) {
+		return em.find(Customer.class, id);
+	}
+
+	@Override
+	public Collection<T> findAll() {
+		return em.createQuery("select c from Customer c", Customer.class).getResultList();
+	}
+
+	@Override
+	public Customer merge(T entity) {
+		return em.merge(entity);
+	}
+
+}

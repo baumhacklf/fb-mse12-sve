@@ -1,0 +1,37 @@
+package sve2.fhbay.client;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import sve2.fhbay.domain.Customer;
+import sve2.fhbay.interfaces.SimpleCustomerAdminRemote;
+import sve2.util.JndiUtil;
+import sve2.util.LoggingUtil;
+
+public class FhBayConsoleClient {
+	public static void main(String[] args) throws NamingException {
+		LoggingUtil.initJdkLogging("logging.properties");
+		
+		// java:jboss/exported/fhbay-beans/CustomerAdminBean!sve2.fhbay.interfaces.CustomerAdminRemote
+		
+		testSimpleCustomerAdmin();
+	}
+
+	private static void testSimpleCustomerAdmin() throws NamingException {
+		/*
+		 * JBoss output (jndi name)
+		 * java:jboss/exported/fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote
+		 */
+		Context ctx = new InitialContext();
+		Object ref = ctx.lookup("fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote");
+//		SimpleCustomerAdminRemote custAdminProxy = (SimpleCustomerAdminRemote) ref;
+		
+		SimpleCustomerAdminRemote custAdminProxy = JndiUtil.getRemoteObject("fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote", SimpleCustomerAdminRemote.class);
+		
+		Customer cust1 = new Customer("Franz", "Klammer", "fklammer", "passwd", "fklammer@gmail.com");
+		System.out.println("Client: save customer");
+		custAdminProxy.saveCustomer(cust1);
+	}
+
+}

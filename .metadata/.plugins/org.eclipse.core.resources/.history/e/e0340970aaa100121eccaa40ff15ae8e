@@ -1,0 +1,9 @@
+package sve2.fhbay.interfaces.exceptions;
+
+import java.io.Serializable;
+
+public class IdNotFoundException extends Exception {
+	public IdNotFoundException(Serializable) {
+		
+	}
+}
