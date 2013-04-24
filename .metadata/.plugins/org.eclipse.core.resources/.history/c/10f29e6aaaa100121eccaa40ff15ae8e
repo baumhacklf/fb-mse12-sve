@@ -1,7 +1,0 @@
-package sve2.fhbay.interfaces.exceptions;
-
-public class IdNotFoundException extends Exception {
-	public IdNotFoundException() {
-		
-	}
-}
