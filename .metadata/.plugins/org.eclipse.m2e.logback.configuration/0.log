@@ -7249,3 +7249,11 @@ Caused by: java.io.IOException: read past EOF
 2013-05-14 22:03:27,852 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
 2013-05-14 22:03:46,747 [Worker-38] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\public\workspace\fhbay-beans
 2013-05-14 22:03:46,747 [Worker-38] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn  -B -U -s D:\Users\Florian\.m2\settings.xml install jboss-as:deploy
+2013-05-14 22:08:20,094 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2013-05-14 22:08:20,099 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2013-05-14 22:08:20,099 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2013-05-14 22:08:20,099 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2013-05-14 22:08:21,169 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2013-05-14 22:08:21,184 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2013-05-14 22:08:21,189 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2013-05-14 22:08:21,199 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource

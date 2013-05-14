@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Iterator"/>
-<fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
-<fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
-<fullyQualifiedTypeName name="javax.persistence.Column"/>
 <fullyQualifiedTypeName name="sve2.fhbay.interfaces.Auction"/>
 <fullyQualifiedTypeName name="javax.naming.NameNotFoundException"/>
 <fullyQualifiedTypeName name="sve2.fhbay.interfaces.exceptions.ArticleBidException"/>
@@ -32,32 +28,36 @@
 <fullyQualifiedTypeName name="javax.persistence.NamedQuery"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="sve2.fhbay.interfaces.ArticleAdminRemote"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="org.hibernate.internal.util.compare.EqualsHelper"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
-<fullyQualifiedTypeName name="sve2.fhbay.domain.Category"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
-<fullyQualifiedTypeName name="sve2.fhbay.interfaces.AuctionRemote"/>
 <fullyQualifiedTypeName name="javax.persistence.Enumerated"/>
 <fullyQualifiedTypeName name="javax.persistence.EnumType"/>
 <fullyQualifiedTypeName name="sve2.fhbay.domain.CustomerRole"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="sve2.fhbay.domain.ArticleState"/>
-<fullyQualifiedTypeName name="sve2.fhbay.domain.Bid"/>
 <fullyQualifiedTypeName name="sve2.fhbay.util.DateUtil"/>
 <fullyQualifiedTypeName name="sve2.fhbay.client.TestData"/>
-<fullyQualifiedTypeName name="sve2.fhbay.interfaces.exceptions.NameNotFoundException"/>
 <fullyQualifiedTypeName name="org.junit.BeforeClass"/>
-<fullyQualifiedTypeName name="org.junit.AfterClass"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="sve2.fhbay.interfaces.CustomerAdminRemote"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="sve2.fhbay.domain.Customer"/>
 <fullyQualifiedTypeName name="sve2.fhbay.interfaces.exceptions.IdNotFoundException"/>
 <fullyQualifiedTypeName name="sve2.util.DateUtil"/>
-<fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
 <fullyQualifiedTypeName name="javax.persistence.FetchType"/>
+<fullyQualifiedTypeName name="sve2.fhbay.interfaces.exceptions.NameNotFoundException"/>
+<fullyQualifiedTypeName name="org.junit.ClassRule"/>
+<fullyQualifiedTypeName name="org.junit.runner.RunWith"/>
+<fullyQualifiedTypeName name="org.junit.runners.Suite"/>
+<fullyQualifiedTypeName name="org.junit.runners.Suite.SuiteClasses"/>
 <fullyQualifiedTypeName name="sve2.fhbay.domain.Article"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
+<fullyQualifiedTypeName name="sve2.fhbay.interfaces.AuctionRemote"/>
+<fullyQualifiedTypeName name="sve2.fhbay.domain.Category"/>
+<fullyQualifiedTypeName name="org.junit.AfterClass"/>
+<fullyQualifiedTypeName name="sve2.fhbay.domain.Bid"/>
 </qualifiedTypeNameHistroy>

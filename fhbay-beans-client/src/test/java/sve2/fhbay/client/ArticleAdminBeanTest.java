@@ -1,3 +1,4 @@
+package sve2.fhbay.client;
 import java.util.Date;
 import java.util.List;
 
