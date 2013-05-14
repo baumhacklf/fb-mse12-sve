@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -41,6 +43,9 @@ public class Customer implements Serializable {
 	private String password;
 	@Column(nullable = false)
 	private String email;
+	
+	@Enumerated(EnumType.STRING)
+	private CustomerRole role = CustomerRole.USER;
 
 	// wenn keine referenz mehr wird gelöscht (orphanRemoval)
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -152,6 +157,14 @@ public class Customer implements Serializable {
 
 	public void setPaymentData(List<PaymentData> paymentData) {
 		this.paymentData = paymentData;
+	}
+
+	public CustomerRole getRole() {
+		return role;
+	}
+
+	public void setRole(CustomerRole role) {
+		this.role = role;
 	}
 
 	/*

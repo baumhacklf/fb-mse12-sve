@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="showArticles" key="selection"/>
+		<item value="Which category" key="selection"/>
 		<list key="findhistory">
-			<item value="showArticles"/>
-			<item value="bidOnArticle"/>
-			<item value="setup"/>
-			<item value="showConcreteArticle"/>
-			<item value="neu"/>
-			<item value="Remote"/>
-			<item value="Auction"/>
-			<item value="AuctionRemote"/>
+			<item value="Which category"/>
+			<item value="offer"/>
+			<item value="findArticleBy"/>
+			<item value="Exception"/>
+			<item value="getminimum"/>
+			<item value="Choose"/>
+			<item value="Bid"/>
+			<item value="bid"/>
 		</list>
 		<list key="replacehistory">
 		</list>

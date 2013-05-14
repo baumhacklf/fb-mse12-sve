@@ -31,7 +31,7 @@ public class ArticleDaoBean extends AbstractDaoBean<Article, Long> implements
 	public Article findByName(String name) {
 		TypedQuery<Article> qry = getEntityManager().createNamedQuery("qryFindArticleByName", Article.class);
 		qry.setParameter("pattern", "%" + name.toLowerCase() + "%");
-		return qry.getSingleResult();
+		return qry.getResultList().get(0);
 	}
 
 }

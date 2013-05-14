@@ -1,0 +1,340 @@
+Welcome to FHBay Console Client.
+You are not logged in.
+	E Login
+	K list all root categories with sub categories
+	P find article by pattern and (sub) category
+	C list sub categories of a specific category
+	S select a specific article
+	Q quit the programm
+
+Your Choice: 
+E
+Enter your username: 
+maxi
+Enter your password: 
+pwd
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+A
+Name the new category: 
+
+Computer
+Is there a parent category? (type the name of the parent category)
+
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+A
+Name the new category: 
+
+Monitor
+Is there a parent category? (type the name of the parent category)
+computer
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+o
+Name your article: 
+Dell
+Write your description: 
+U2410H
+Initial Price: 
+425.5
+End Date: 
+20.05.2013
+Article was added successfully. Which category should be added?
+monitor
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+c
+
+Computer
+Monitor
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+R
+
+Computer
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+S
+In 1 different categories. Dell: 2013-05-20 00:00:00.0(End-Date)
+
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+L
+Select concrete article
+Name: Dell
+
+Select a name for detailed information.
+dell
+Current Price: 425.5
+Bid Size: 0
+Remaining Time: 5d 2h 4m
+Seller: id: 2 lastname: Mustermann firstname: Max username: maxi email: max@mustermann.at Billing Address: 4232 Hagenberg, Hauptstraﬂe 117
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+p
+Define your pattern: 
+del
+Specify your category: 
+monitor
+
+Dell
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+h
+Choose the article by name: 
+dell
+
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+b
+Which article you want to bid.
+dell
+Minimum Bid: 425.5 your bid:
+430
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+h
+Choose the article by name: 
+dell
+
+Bidder: maxi
+ Bid: 430.0
+ Date: 2013-05-14 21:56:17.32
+ Bid at creation date: 425.5
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+s
+In 1 different categories. Dell: 2013-05-20 00:00:00.0(End-Date)
+
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+m
+Welcome to FHBay Console Client.
+Following options are available: 
+	O offer article
+	A add category
+	B bid on article
+	C for listing all categories
+	R for all root categories
+	S for search all auctions
+	L for list all auctions
+	P find article by pattern and (sub) category
+	H chronological list of bids of a single article
+	E logg off
+	Q quit the program
+
+Your Choice: 
+l
+Select concrete article
+Name: Dell
+
+Select a name for detailed information.
+dell
+Current Price: 426.5
+Bid Size: 1
+Remaining Time: 5d 2h 3m
+Seller: id: 2 lastname: Mustermann firstname: Max username: maxi email: max@mustermann.at Billing Address: 4232 Hagenberg, Hauptstraﬂe 117
+
+	M return to main menu
+	Q quits the program
+	E logg off
+
+q
+Successfully logged off.

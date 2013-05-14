@@ -52,4 +52,9 @@ public class AbstractDaoBean<T, ID extends Serializable> implements Dao<T, ID> {
 	protected Class<T> getEntityType() {
 		return entityType;
 	}
+
+	@Override
+	public void removeByObject(T entity) {
+		em.remove(entity);
+	}
 }

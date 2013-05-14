@@ -235,8 +235,8 @@ public class FhBayConsoleClient {
 //					"New Price for Article <%s> is <%s>", auctionAdmin
 //							.getBidInfo(art1.getId()).getArticleName(),
 //					auctionAdmin.getBidInfo(art1.getId()).getHighestBid()));
-			Article increasedArticle = artAdmin.findArticleByName(art1.getName());
-			System.out.println(auctionAdmin.getBidInfo(increasedArticle.getId()));
+//			Article increasedArticle = artAdmin.findArticleByName(art1.getName());
+//			System.out.println(auctionAdmin.getBidInfo(increasedArticle.getId()));
 
 		} catch (IdNotFoundException e) {
 			e.printStackTrace();

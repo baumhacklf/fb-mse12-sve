@@ -44,7 +44,7 @@ public class Article implements Serializable, Comparable<Article> {
 	@Column(length = 5000)
 	private String description;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Customer seller;
 	@ManyToOne
 	private Customer buyer;
@@ -218,7 +218,7 @@ public class Article implements Serializable, Comparable<Article> {
 		List<Bid> sortedBids = new ArrayList<Bid>(bids);
 		Collections.sort(sortedBids, new BidOrderComparator());
 		
-		return sortedBids.get(1).getAmount() + 1;
+		return sortedBids.get(0).getAmount() + 1;
 	}
 	
 	public double getHighestBid() {

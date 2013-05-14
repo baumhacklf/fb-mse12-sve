@@ -11,7 +11,6 @@ import sve2.fhbay.domain.Article;
 import sve2.fhbay.domain.ArticleState;
 import sve2.fhbay.domain.Bid;
 import sve2.fhbay.domain.Customer;
-import sve2.fhbay.dto.BidInfoDto;
 import sve2.fhbay.interfaces.AuctionLocal;
 import sve2.fhbay.interfaces.AuctionRemote;
 import sve2.fhbay.interfaces.dao.ArticleDao;
@@ -19,6 +18,7 @@ import sve2.fhbay.interfaces.dao.CustomerDao;
 import sve2.fhbay.interfaces.exceptions.ArticleBidException;
 import sve2.fhbay.interfaces.exceptions.IdNotFoundException;
 import sve2.fhbay.interfaces.exceptions.NameNotFoundException;
+import sve2.fhbay.util.DateUtil;
 
 @Stateless
 public class AuctionBean implements AuctionLocal, AuctionRemote {
@@ -76,31 +76,24 @@ public class AuctionBean implements AuctionLocal, AuctionRemote {
 		if (customer == null)
 			throw new IdNotFoundException(bidderId, "Customer");
 
-		if (article.getMinimumBid() > amount)
-			throw new ArticleBidException(articleName,
-					"Bid was lower than initial price.");
-
 		Bid bid = new Bid();
 		bid.setAmount(amount);
 		bid.setArticleId(article.getId());
 		bid.setBidder(customer);
+		bid.setBidDate(DateUtil.now());
+		bid.setLastBid(article.getCurrentPrice());
+		
+		double minimumBidTemp = article.getMinimumBid();
 
+		if (minimumBidTemp > amount) {
+			
+			throw new ArticleBidException(articleName,
+					"Bid was lower than other bids.");
+			
+		}
 		article.addBid(bid);
 		articleDao.persist(article);
-	}
 
-	@Override
-	public BidInfoDto getBidInfo(Long articleId) throws IdNotFoundException {
-		if (articleId == null)
-			throw new IllegalArgumentException();
-
-		Article article = articleDao.findById(articleId);
-
-		if (article == null)
-			throw new IdNotFoundException(articleId, "Article");
-
-		BidInfoDto bidInfo = new BidInfoDto(article);
-		return bidInfo;
 	}
 
 }

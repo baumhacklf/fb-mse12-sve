@@ -12,5 +12,7 @@ public interface Dao<T, ID extends Serializable> {
 	Collection<T> findAll();
 
 	T merge(T entity);
+	
+	void removeByObject(T entity);
 
 }

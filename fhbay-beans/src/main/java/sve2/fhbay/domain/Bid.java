@@ -1,6 +1,7 @@
 package sve2.fhbay.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +25,10 @@ public class Bid implements Serializable {
 
 	@Column(nullable = false)
 	private Long articleId;
+	
+	private Date bidDate;
+	
+	private double lastBid;
 
 	public Long getId() {
 		return id;
@@ -55,5 +60,21 @@ public class Bid implements Serializable {
 
 	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
+	}
+
+	public Date getBidDate() {
+		return bidDate;
+	}
+
+	public void setBidDate(Date bidDate) {
+		this.bidDate = bidDate;
+	}
+
+	public double getLastBid() {
+		return lastBid;
+	}
+
+	public void setLastBid(double lastBid) {
+		this.lastBid = lastBid;
 	}
 }

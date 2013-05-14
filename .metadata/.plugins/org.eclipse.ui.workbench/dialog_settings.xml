@@ -12,12 +12,15 @@
 		<list key="textEntries">
 		</list>
 	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="8" key="DIALOG_Y_ORIGIN"/>
+		<item value="38" key="DIALOG_X_ORIGIN"/>
+	</section>
 	<section name="NewWizardAction">
-		<item value="org.eclipse.datatools.connectivity.internal.ui.wizards.newconnectionprofile" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.eclipse.jdt.junit.wizards.NewTestCaseCreationWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.datatools.connectivity"/>
-			<item value="org.eclipse.jst.j2ee.internal"/>
-			<item value="org.eclipse.rse.ui.newWizards.rseCategory"/>
+			<item value="org.eclipse.jdt.ui.java"/>
+			<item value="org.eclipse.jdt.ui.java/org.eclipse.jdt.junit"/>
 		</list>
 	</section>
 	<section name="ImportExportAction">

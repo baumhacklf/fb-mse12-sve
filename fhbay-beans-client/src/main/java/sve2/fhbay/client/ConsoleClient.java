@@ -10,12 +10,11 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
-import sve2.fhbay.domain.Address;
 import sve2.fhbay.domain.Article;
+import sve2.fhbay.domain.Bid;
 import sve2.fhbay.domain.Category;
-import sve2.fhbay.domain.CreditCard;
 import sve2.fhbay.domain.Customer;
-import sve2.fhbay.domain.Phone;
+import sve2.fhbay.domain.CustomerRole;
 import sve2.fhbay.interfaces.ArticleAdminRemote;
 import sve2.fhbay.interfaces.AuctionRemote;
 import sve2.fhbay.interfaces.CustomerAdminRemote;
@@ -35,54 +34,68 @@ public class ConsoleClient {
 
 	private static Customer user;
 
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) {
 		try {
 			jndiSetup();
 		} catch (NamingException n) {
 			System.out.println("JNDI Lookup unsuccessful.");
 		}
 
-		userSetup();
-		mainPage();
+		TestData.userSetup(custAdmin);
+		try {
+			mainPage();
+		} catch (IOException e) {
+			System.out.println("Invalid Input. Try one more time.");
+		}
 	}
 
-	private static void mainPage() throws IOException, ParseException {
+	private static void mainPage() throws IOException {
 		System.out.println("Welcome to FHBay Console Client.");
 		br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder menu = new StringBuilder();
 
 		while (true) {
+			StringBuilder menu = new StringBuilder();
+			
 			if (user == null) {
 				menu.append("You are not logged in.\n");
-				menu.append("\tR Login\n");
+				menu.append("\tE Login\n");
 				menu.append("\tK list all root categories with sub categories\n");
 				menu.append("\tP find article by pattern and (sub) category\n");
+				menu.append("\tC list sub categories of a specific category\n");
 				menu.append("\tS select a specific article\n");
-				menu.append("\tE exit programm\n");
+				menu.append("\tQ quit the programm\n");
 				
 				System.out.println(menu.toString());
 				System.out.println("Your Choice: ");
 				String choice = br.readLine();
 				
-				if(choice.equalsIgnoreCase("r"))
+				if(choice.equalsIgnoreCase("e"))
 					login();
 				else if(choice.equalsIgnoreCase("k"))
 					listCategories(true);
 				else if(choice.equalsIgnoreCase("p"))
 					findArticle();
+				else if(choice.equalsIgnoreCase("c"))
+					showSubcategories();
 				else if(choice.equalsIgnoreCase("s"))
 					showConcreteArticle();
-				else if(choice.equalsIgnoreCase("e"))
+				else if(choice.equalsIgnoreCase("q"))
 					quitProgram();
+				
 			} else {
 				menu.append("Following options are available: \n");
+				menu.append("\tO offer article\n");
+				menu.append("\tA add category\n");
+				menu.append("\tB bid on article\n");
 				menu.append("\tC for listing all categories\n");
 				menu.append("\tR for all root categories\n");
 				menu.append("\tS for search all auctions\n");
 				menu.append("\tL for list all auctions\n");
 				menu.append("\tP find article by pattern and (sub) category\n");
-				menu.append("\tE logg off");
-				menu.append("\tQ quits the program\n");
+				if(user.getRole().equals(CustomerRole.ADMINISTRATOR))
+					menu.append("\tH chronological list of bids of a single article\n");
+				menu.append("\tE logg off\n");
+				menu.append("\tQ quit the program\n");
 				
 				System.out.println(menu.toString());
 				System.out.println("Your Choice: ");
@@ -102,8 +115,40 @@ public class ConsoleClient {
 					findArticle();
 				else if(choice.equalsIgnoreCase("l"))
 					showConcreteArticle();
+				else if(choice.equalsIgnoreCase("a"))
+					addCategory();
+				else if(choice.equalsIgnoreCase("o"))
+					addArticle();
+				else if(choice.equalsIgnoreCase("h"))
+					chronologicalList();
+				else if(choice.equalsIgnoreCase("b"))
+					bidOnArticle();
 			}
 		}
+	}
+	
+	private static void chronologicalList() throws IOException {
+		System.out.println("Choose the article by name: ");
+		String articleName = br.readLine();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			Article article = artAdmin.findArticleByName(articleName);
+			for(Bid b : article.getBids()) {
+				sb.append("\n");
+				sb.append("Bidder: " + b.getBidder().getUsername() + "\n");
+				sb.append(" Bid: " + b.getAmount() + "\n");
+				sb.append(" Date: " + b.getBidDate() + "\n");
+				sb.append(" Bid at creation date: " + b.getLastBid());
+			}
+		} catch (NameNotFoundException e) {
+			System.out.println("Article wasn't found with the given name.");
+		}
+		
+		System.out.println(sb.toString());
+		
+		defaultMenu();
 	}
 	
 	private static void login() throws IOException {
@@ -119,7 +164,7 @@ public class ConsoleClient {
 		}
 	}
 
-	private static void listCategories(boolean showRootCategories) throws IOException, ParseException {
+	private static void listCategories(boolean showRootCategories) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		
 		Collection<Category> categories;
@@ -130,35 +175,12 @@ public class ConsoleClient {
 		}
 
 		for (Category c : categories) {
-			sb.append(c.getName());
 			sb.append("\n");
+			sb.append(c.getName());
 		}
 		
-		sb.append("\tR returns to main menu\n");
-//		sb.append("\tA add a category\n");
-//		sb.append("\tR remove a category\n");
-//		sb.append("\tB show all subcategories of a specific category\n");
-//		sb.append("\tS show all articles of the category and subcategories\n");
-		sb.append("\tQ quits the program\n");
-		sb.append("\tE logg off\n");
 		System.out.println(sb.toString());
-		System.out.println("Your Choice: ");
-		String choice = br.readLine();
-
-		if (choice.equalsIgnoreCase("q"))
-			quitProgram();
-		else if (choice.equalsIgnoreCase("r"))
-			mainPage();
-		else if (choice.equalsIgnoreCase("e"))
-			loggOff();
-//		else if (choice.equalsIgnoreCase("s"))
-//			showArticles();
-//		else if (choice.equalsIgnoreCase("r"))
-//			removeCategory();
-//		else if (choice.equalsIgnoreCase("a"))
-//			addCategory();
-//		else if(choice.equalsIgnoreCase("b"))
-//			showSubcategories();
+		defaultMenu();
 
 	}
 
@@ -174,19 +196,17 @@ public class ConsoleClient {
 			Category category = artAdmin.findCategoryByName(categoryName);
 			Collection<Article> articles = artAdmin.findAllMatchingArticles(category.getId(), pattern, true);
 			for(Article a : articles) {
-				sb.append(a.getName() + "\n");
+				sb.append("\n");
+				sb.append(a.getName());
 			}
 		} catch (NameNotFoundException e) {
 			System.out.println("Category Name wasn't found.");
 		} catch (IdNotFoundException e) {
 			System.out.println("Category id wasn't found.");
 		}
-
-		sb.append("\n");
-		sb.append("\tR returns to main menu\n");
-		sb.append("\tQ quits the program\n");
-		sb.append("\tE logg off\n");
+		
 		System.out.println(sb.toString());
+		defaultMenu();
 	}
 
 	private static void showSubcategories() throws IOException {
@@ -203,15 +223,9 @@ public class ConsoleClient {
 		} catch (NameNotFoundException e) {
 			System.out.println("category wasn't found.");
 		}
-		sb.append("\n");
-//		sb.append("\tR returns to main menu\n");
-//		sb.append("\tA add a category\n");
-//		sb.append("\tR remove a category\n");
-//		sb.append("\tB show all subcategories of a specific category\n");
-//		sb.append("\tS show all articles of the category and subcategories\n");
-//		sb.append("\tQ quits the program\n");
-//		sb.append("\tE logg off\n");
+		
 		System.out.println(sb.toString());
+		defaultMenu();
 	}
 
 	private static void addCategory() throws IOException {
@@ -238,7 +252,7 @@ public class ConsoleClient {
 		artAdmin.saveCategory(category);
 	}
 
-	private static void showArticles() throws IOException, ParseException {
+	private static void showArticles() throws IOException {
 		StringBuilder sb = new StringBuilder();
 		Collection<Article> articles = artAdmin.findAllArticles();
 		for(Article a : articles) {
@@ -246,33 +260,8 @@ public class ConsoleClient {
 			sb.append(a.getName() + ": ");
 			sb.append(a.getEndDate() + "(End-Date)\n");
 		}
-		sb.append("\tS buy a specific article\n");
-		sb.append("\tA add article\n");
-		sb.append("\tG get concrete article\n");
-		sb.append("\tF search article by pattern and category\n");
-		sb.append("\tB bid on article\n");
-		sb.append("\tQ quits the program\n");
-		sb.append("\tE logg off\n");
 		System.out.println(sb.toString());
-		
-		String choice = br.readLine();
-		
-		if(choice.equalsIgnoreCase("a"))
-			addArticle();
-		else if(choice.equalsIgnoreCase("g"))
-			showConcreteArticle();
-		else if(choice.equalsIgnoreCase("f"))
-			findArticle();
-		else if(choice.equalsIgnoreCase("b"))
-			bidOnArticle();
-		else if(choice.equalsIgnoreCase("q"))
-			quitProgram();
-		else if(choice.equalsIgnoreCase("e"))
-			loggOff();
-		else if(choice.equalsIgnoreCase("s"))
-			bidOnArticle();
-//		else if(choice.equalsIgnoreCase("r"))
-//		removeArticle();
+		defaultMenu();
 	}
 
 	private static void showConcreteArticle() throws IOException {
@@ -284,6 +273,7 @@ public class ConsoleClient {
 		}
 		System.out.println(sb.toString());
 		
+		System.out.println("Select a name for detailed information.");
 		String articleName = br.readLine();
 		sb = new StringBuilder();
 		
@@ -303,22 +293,8 @@ public class ConsoleClient {
 		} catch(NameNotFoundException e) {
 			System.out.println("Article with given name wasn't found.");
 		}
-		
-		sb.append("\n");
-//		sb.append("\tR returns to main menu\n");
-		sb.append("\tQ quits the program\n");
-		sb.append("\tE logg off\n");
 		System.out.println(sb.toString());
-		
-		String choice = br.readLine();
-		
-//		if(choice.equalsIgnoreCase("r"))
-//			removeArticle();
-		if(choice.equalsIgnoreCase("q"))
-			quitProgram();
-		else if(choice.equalsIgnoreCase("e"))
-			loggOff();
-		
+		defaultMenu();
 	}
 
 	private static void bidOnArticle() throws IOException {
@@ -326,7 +302,7 @@ public class ConsoleClient {
 		String articleName = br.readLine();
 		try {
 			Article article = artAdmin.findArticleByName(articleName);
-			System.out.println("Minimum Bid: " + article.getMinimumBid() + " your bid:");
+			System.out.println("Minimum Bid: " + article.getCurrentPrice() + " your bid:");
 			Double bid = Double.parseDouble(br.readLine());
 			auctionAdmin.placeBid(articleName, bid, user.getId());
 		} catch (NameNotFoundException e) {
@@ -338,18 +314,23 @@ public class ConsoleClient {
 		}
 	}
 
-	private static void addArticle() throws IOException, ParseException {
+	private static void addArticle() throws IOException {
 		System.out.println("Name your article: ");
 		String articleName = br.readLine();
 		System.out.println("Write your description: ");
 		String articleDescription = br.readLine();
 		System.out.println("Initial Price: ");
 		Double articleInitialPrice = Double.parseDouble(br.readLine());
-		System.out.println("Start Date: ");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		Date articleStartDate = sdf.parse(br.readLine());
+		Date articleStartDate = DateUtil.now();
 		System.out.println("End Date: ");
-		Date articleEndDate = sdf.parse(br.readLine());
+		Date articleEndDate;
+		try {
+			articleEndDate = sdf.parse(br.readLine());
+		} catch (ParseException e2) {
+			articleEndDate = DateUtil.addSeconds(DateUtil.now(), 60000);
+			System.out.println("Date parsing failed.");
+		}
 		
 		Article article = new Article(articleName, articleDescription, articleInitialPrice, 
 				articleStartDate, articleEndDate);
@@ -363,16 +344,38 @@ public class ConsoleClient {
 		String articleCategoryName = br.readLine();
 		Article savedArticle;
 		try {
-			savedArticle = artAdmin.findArticleByName(articleName);
-			Category articleCategory = artAdmin.findCategoryByName(articleCategoryName);
-			artAdmin.assignArticleToCategory(savedArticle.getId(), articleCategory.getId());
+			if(articleCategoryName.length() > 0) {
+				savedArticle = artAdmin.findArticleByName(articleName);
+				Category articleCategory = artAdmin.findCategoryByName(articleCategoryName);
+				artAdmin.assignArticleToCategory(savedArticle.getId(), articleCategory.getId());
+			}
 		} catch (NameNotFoundException e1) {
 			System.out.println("article name is incorrect.");
 		} catch (IdNotFoundException e) {
 			System.out.println("Id wasn't found.");
+		} catch (Exception ex) {
+			System.out.println("Name not found");
 		}
 	}
 
+	private static void defaultMenu() throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+		sb.append("\tM return to main menu\n");
+		sb.append("\tQ quits the program\n");
+		sb.append("\tE logg off\n");
+		System.out.println(sb.toString());
+		
+		String choice = br.readLine();
+		
+		if(choice.equalsIgnoreCase("q"))
+			quitProgram();
+		else if(choice.equalsIgnoreCase("m"))
+			mainPage();
+		else if(choice.equalsIgnoreCase("e"))
+			loggOff();
+	}
+	
 	private static void jndiSetup() throws NamingException {
 		custAdmin = JndiUtil
 				.getRemoteObject(
@@ -389,39 +392,14 @@ public class ConsoleClient {
 				AuctionRemote.class);
 	}
 
-	private static void userSetup() {
-		Customer temp;
-		try {
-			temp = custAdmin.findCustomerByUsername("maxi");
-		} catch (Exception e) {
-			temp = null;
-		}
-
-		if (temp == null) {
-			Customer customer = new Customer("Max", "Mustermann", "maxi",
-					"pwd", "max@mustermann.at");
-			customer.setBillingAddress(new Address("4232", "Hagenberg",
-					"Hauptstraße 117"));
-			customer.addPhone("mobile", new Phone("+43", "(0) 555 333"));
-			customer.addShippingAddress(new Address("5555", "Mostbusch",
-					"Linzerstraße 15"));
-			customer.addShippingAddress(new Address("8050", "Königsbrunn",
-					"Maisfeld 15"));
-			customer.addPaymentData(new CreditCard("Himmelbrunner",
-					"010448812", DateUtil.getDate(2007, 07, 1)));
-
-			custAdmin.saveCustomer(customer);
-		}
-	}
-
 	private static void quitProgram() {
-		user = null;
-		System.out.println("Successfully logged off.");
+		loggOff();
 		System.exit(0);
 	}
 
 	private static void loggOff() {
 		user = null;
+		System.out.println("Successfully logged off.");
 	}
 
 }

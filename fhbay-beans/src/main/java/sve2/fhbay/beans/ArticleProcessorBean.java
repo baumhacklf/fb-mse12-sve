@@ -39,11 +39,10 @@ public class ArticleProcessorBean implements MessageListener {
 			Thread.sleep(5000 + random.nextInt(3000));
 			// TESTCODE END
 
-			// TODO category
-//			Long categoryId = articleMsg.getLong("categoryId");
-//
+			Long categoryId = articleMsg.getLong("categoryId");
+
 			articleAdmin.offerArticle(article, sellerId);
-//			articleAdmin.assignArticleToCategory(article.getId(), categoryId);
+			articleAdmin.assignArticleToCategory(article.getId(), categoryId);
 			
 			System.out.println(String.format(
 					"<=========== processing of article <%s> with id <%s> finished",

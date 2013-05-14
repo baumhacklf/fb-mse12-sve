@@ -65,5 +65,4 @@ public class CustomerAdminBean implements CustomerAdminRemote {
 		}
 		return customer;
 	}
-	
 }
