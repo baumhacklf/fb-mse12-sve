@@ -14,11 +14,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "qryFindCustomerByUsername", query = "select c from Customer c where lower(c.username) like :pattern"),
+	@NamedQuery(name = "qryFindCustomerByName", query = "select c from Customer c where lower(c.lastname) like :pattern")
+})
+
 public class Customer implements Serializable {
 
 	private static final long serialVersionUID = 1L;

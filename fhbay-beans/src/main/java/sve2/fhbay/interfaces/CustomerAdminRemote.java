@@ -12,4 +12,6 @@ public interface CustomerAdminRemote {
 	Long saveCustomer(Customer customer);
 	Collection<Customer> findAllCustomers();
 	Customer findCustomerById(Long id) throws IdNotFoundException;
+	Customer loginCustomer(String name, String password) throws Exception;
+	Customer findCustomerByUsername(String username);
 }

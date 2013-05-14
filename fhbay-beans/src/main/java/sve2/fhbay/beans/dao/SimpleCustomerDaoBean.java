@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 
-import javax.annotation.Resource;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-//import javax.naming.Context;
-//import javax.naming.InitialContext;
-//import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import sve2.fhbay.domain.Customer;
 import sve2.fhbay.interfaces.dao.SimpleCustomerDao;
 import sve2.fhbay.util.JdbcUtil;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.naming.NamingException;
 
 @Stateless
 /*

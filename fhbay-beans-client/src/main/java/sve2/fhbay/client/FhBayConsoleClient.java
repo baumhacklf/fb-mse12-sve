@@ -1,5 +1,6 @@
 package sve2.fhbay.client;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map.Entry;
@@ -16,11 +17,13 @@ import javax.naming.NamingException;
 
 import sve2.fhbay.domain.Address;
 import sve2.fhbay.domain.Article;
+import sve2.fhbay.domain.Category;
 import sve2.fhbay.domain.CreditCard;
 import sve2.fhbay.domain.Customer;
 import sve2.fhbay.domain.PaymentData;
 import sve2.fhbay.domain.Phone;
 import sve2.fhbay.interfaces.ArticleAdminRemote;
+import sve2.fhbay.interfaces.AuctionRemote;
 import sve2.fhbay.interfaces.CustomerAdminRemote;
 import sve2.fhbay.interfaces.exceptions.IdNotFoundException;
 import sve2.util.DateUtil;
@@ -31,7 +34,9 @@ public class FhBayConsoleClient {
 
 	private static CustomerAdminRemote custAdmin;
 	private static ArticleAdminRemote artAdmin;
+	private static AuctionRemote auctionAdmin;
 
+	/*
 	public static void main(String[] args) throws NamingException {
 		LoggingUtil.initJdkLogging("logging.properties");
 
@@ -45,6 +50,10 @@ public class FhBayConsoleClient {
 						"fhbay-beans/ArticleAdminBean!sve2.fhbay.interfaces.ArticleAdminRemote",
 						ArticleAdminRemote.class);
 
+		auctionAdmin = JndiUtil.getRemoteObject(
+				"fhbay-beans/AuctionBean!sve2.fhbay.interfaces.AuctionRemote",
+				AuctionRemote.class);
+
 		testCustomerAdmin();
 		System.out
 				.println("ARTICLE TEST METHOD ------------------------------");
@@ -54,7 +63,7 @@ public class FhBayConsoleClient {
 				.println("=============== testArticleProcessor ===============");
 		testArticleProcessor();
 	}
-
+*/
 	private static void testCustomerAdmin() {
 		try {
 			System.out.println("--------------- save customer ---------------");
@@ -130,6 +139,27 @@ public class FhBayConsoleClient {
 		Long cust1Id = customers[0].getId();
 		Long cust2Id = customers[1].getId();
 
+		System.out.println("-------------------- start category saving ------");
+
+		Category cat1 = new Category("Category 1");
+		Category cat11 = new Category("Category 1.1");
+		Category cat12 = new Category("Category 1.2");
+		Category cat13 = new Category("Category 1.3");
+		Category cat131 = new Category("Category 1.3.1");
+		Category cat132 = new Category("Category 1.3.2");
+		Category cat133 = new Category("Category 1.3.3");
+		cat1.addSubCategory(cat11);
+		cat1.addSubCategory(cat12);
+		cat1.addSubCategory(cat13);
+		cat13.addSubCategory(cat131);
+		cat13.addSubCategory(cat132);
+		cat13.addSubCategory(cat133);
+
+		Category cat2 = new Category("Category 2");
+
+		artAdmin.saveCategory(cat1);
+		artAdmin.saveCategory(cat2);
+
 		System.out.println("------------- saveArticle ----------------------");
 
 		try {
@@ -156,15 +186,62 @@ public class FhBayConsoleClient {
 			System.out
 					.println("------------- findAllMatchingArticles ----------");
 			System.out.println("Articles matching \"neu\"");
+			Category category = artAdmin.findCategoryByName(cat1.getName());
 			Collection<Article> matchingArticles = artAdmin
-					.findAllMatchingArticles(null, "neu", true);
+					.findAllMatchingArticles(category.getId(), "neu", true);
+
 			if (matchingArticles != null && !matchingArticles.isEmpty())
 				for (Article art : matchingArticles)
 					System.out.printf("%s - %s%n", art, art.getDescription());
 			else
 				System.out.println("No matching artilces found.");
+
+			System.out.println("------------- findCategoryById ----------");
+			System.out.println("Category: "
+					+ artAdmin.findCategoryById(category.getId()).toString());
+
+			System.out.println("------------- findAllRootCategories----------");
+			System.out.println("RootCategory Size: "
+					+ artAdmin.findAllRootCategories().size());
+
+			System.out
+					.println("------------- Add Category to Article----------");
+			ArrayList<Article> articlesCopy = new ArrayList<Article>(
+					matchingArticles);
+			artAdmin.assignArticleToCategory(articlesCopy.get(0).getId(),
+					category.getId());
+			System.out.println("RootCategory Size: "
+					+ artAdmin.findAllRootCategories().size());
+
+			System.out
+					.println("------------- Find Tree Category By Id----------");
+			Category lastCategory = artAdmin
+					.findCategoryByName(cat13.getName());
+			Category tree = artAdmin.findCategoryTree(lastCategory.getId());
+			System.out.println(String.format("Category Tree from <%s> is <%s>",
+					lastCategory, tree));
+
+			System.out.println("------------- Find Article by name ---------");
+			System.out.println(String.format("Article: <%s>",
+					artAdmin.findArticleByName(art2.getName())));
+
+			System.out
+					.println("------------------ increase price -------------");
+			// System.out.println(String.format("Price Before: <%s>", ));
+			System.out.println(art1.getName());
+			auctionAdmin.placeBid(art1.getName(), art1.getCurrentPrice() + 10,
+					customers[0].getId());
+//			System.out.println(String.format(
+//					"New Price for Article <%s> is <%s>", auctionAdmin
+//							.getBidInfo(art1.getId()).getArticleName(),
+//					auctionAdmin.getBidInfo(art1.getId()).getHighestBid()));
+			Article increasedArticle = artAdmin.findArticleByName(art1.getName());
+			System.out.println(auctionAdmin.getBidInfo(increasedArticle.getId()));
+
 		} catch (IdNotFoundException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -196,27 +273,27 @@ public class FhBayConsoleClient {
 					"jms/RemoteConnectionFactory", ConnectionFactory.class);
 			Queue fhBayQueue = JndiUtil.getRemoteObject("jms/queue/FhBayQueue",
 					Queue.class);
-			
+
 			Connection conn = factory.createConnection(username, password);
-			Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			Session session = conn.createSession(false,
+					Session.AUTO_ACKNOWLEDGE);
 			MessageProducer producer = session.createProducer(fhBayQueue);
-			
-			for(int i = 0; i<30; i++) {
-				Article article = new Article("Article " + i, 
-											  "Superior Article-" + 1,
-											  200.0 + i*5,
-											  DateUtil.now(),
-											  DateUtil.addSeconds(DateUtil.now(), 5+i));
-				
+
+			for (int i = 0; i < 30; i++) {
+				Article article = new Article("Article " + i,
+						"Superior Article-" + 1, 200.0 + i * 5, DateUtil.now(),
+						DateUtil.addSeconds(DateUtil.now(), 5 + i));
+
 				MapMessage articleMessage = session.createMapMessage();
 				articleToMessage(articleMessage, article);
-				
+
 				articleMessage.setLong("sellerId", sellerId);
-				
+
 				producer.send(articleMessage);
-				System.out.println(String.format("Article <%s> sent to server.", article.getName()));
+				System.out.println(String.format(
+						"Article <%s> sent to server.", article.getName()));
 			}
-			
+
 			producer.close();
 			session.close();
 			conn.close();

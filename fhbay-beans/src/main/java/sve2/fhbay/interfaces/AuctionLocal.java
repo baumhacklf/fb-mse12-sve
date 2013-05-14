@@ -5,6 +5,6 @@ import javax.ejb.Local;
 import sve2.fhbay.domain.Article;
 
 @Local
-public interface AuctionLocal {
+public interface AuctionLocal extends Auction {
 	void addAuctionFinishTimer(Article article);
 }

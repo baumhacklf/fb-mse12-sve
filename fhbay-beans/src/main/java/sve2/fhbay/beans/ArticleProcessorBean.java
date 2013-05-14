@@ -40,12 +40,14 @@ public class ArticleProcessorBean implements MessageListener {
 			// TESTCODE END
 
 			// TODO category
-			// Long categoryId = articleMsg.getLong("categoryId");
-
+//			Long categoryId = articleMsg.getLong("categoryId");
+//
 			articleAdmin.offerArticle(article, sellerId);
+//			articleAdmin.assignArticleToCategory(article.getId(), categoryId);
+			
 			System.out.println(String.format(
-					"<=========== processing of article <%s> finished",
-					article.getName()));
+					"<=========== processing of article <%s> with id <%s> finished",
+					article.getName(), article.getId()));
 
 		} catch (Exception e) {
 			throw new EJBException(e);

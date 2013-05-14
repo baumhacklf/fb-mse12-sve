@@ -10,5 +10,7 @@ import sve2.fhbay.domain.Article;
 public interface ArticleDao extends Dao<Article, Long> {
 
 	Set<Article> findByCategoryAndPattern(Long categoryId, String pattern);
+
+	Article findByName(String name);
 	
 }
